@@ -18,6 +18,6 @@ func LoadConfig(configFile string, conf interface{}) {
 	decoder := json.NewDecoder(file)
 	err2 := decoder.Decode(conf)
 	if err2 != nil {
-		fmt.Println("error decoding json file", err2);
+		fmt.Println("error decoding json file", err2, configFile);
 	}
 }
