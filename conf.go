@@ -22,7 +22,22 @@ func LoadConfig(configFile string, conf interface{}) error {
 }
 
 func FromUrl(configUrl string, conf interface{}) error {
-	resp, err := http.Get(configUrl)
+	return FromUrlBasicAuth(configUrl, "", "", conf)
+}
+
+func FromUrlBasicAuth(configUrl, username, password string, conf interface{}) error {
+	req,err := http.NewRequest("GET", configUrl, nil)
+	if err != nil {
+		return err
+	}
+
+	if username != "" && password != "" {
+		req.SetBasicAuth(username, password)
+	}
+
+	client := &http.Client{}
+
+	resp,err := client.Do(req)
 
 	if err != nil {
 		return err
