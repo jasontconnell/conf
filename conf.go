@@ -18,6 +18,7 @@ func LoadConfig(configFile string, conf interface{}) error {
 	if err != nil {
 		fmt.Println("Error opening json file ", err, configFile)
 	}
+	defer file.Close()
 
 	return fromReader(file, conf)
 }
