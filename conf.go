@@ -3,11 +3,10 @@ package conf
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
+	"github.com/pkg/errors"
 )
 
 type Conf struct{}
@@ -16,7 +15,7 @@ func LoadConfig(configFile string, conf interface{}) error {
 	file, err := os.Open(configFile)
 
 	if err != nil {
-		fmt.Println("Error opening json file ", err, configFile)
+		return errors.Wrapf(err, "opening config file %s", configFile)
 	}
 	defer file.Close()
 
