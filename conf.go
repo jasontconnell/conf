@@ -3,10 +3,10 @@ package conf
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
-	"github.com/pkg/errors"
 )
 
 type Conf struct{}
@@ -15,7 +15,7 @@ func LoadConfig(configFile string, conf interface{}) error {
 	file, err := os.Open(configFile)
 
 	if err != nil {
-		return errors.Wrapf(err, "opening config file %s", configFile)
+		return fmt.Errorf("opening config file %s. %w", configFile, err)
 	}
 	defer file.Close()
 
@@ -54,7 +54,7 @@ func FromUrlBasicAuth(configUrl, username, password string, conf interface{}) er
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return errors.New("couldn't get url: " + configUrl)
+		return fmt.Errorf("couldn't get url: %s", configUrl)
 	}
 
 	return fromReader(resp.Body, conf)
