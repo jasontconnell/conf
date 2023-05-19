@@ -1,3 +1,3 @@
 module github.com/jasontconnell/conf
 
-go 1.17
+go 1.20
